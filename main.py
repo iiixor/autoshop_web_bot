@@ -3,7 +3,7 @@ import os
 import sys
 
 import colorama
-from aiogram import executor, Dispatcher
+from aiogram import Dispatcher, executor
 
 from tgbot.data.config import get_admins
 from tgbot.data.loader import scheduler
@@ -43,7 +43,6 @@ async def on_startup(dp: Dispatcher):
 
     bot_logger.warning("BOT WAS STARTED")
     print(colorama.Fore.LIGHTYELLOW_EX + "~~~~~ Bot was started ~~~~~")
-    print(colorama.Fore.LIGHTBLUE_EX + "~~~~~ TG developer: @djimbox ~~~~~")
     print(colorama.Fore.RESET)
 
     if len(get_admins()) == 0: print("***** ENTER ADMIN ID IN settings.ini *****")
@@ -65,6 +64,7 @@ async def on_shutdown(dp: Dispatcher):
 
 
 if __name__ == "__main__":
+    from aiogram import executor
     create_dbx()
 
     scheduler.start()

@@ -27,11 +27,22 @@ admin_commands = [
 async def set_commands(dp: Dispatcher):
     await dp.bot.set_my_commands(user_commands)
 
-    for admin in get_admins():
-        try:
-            await dp.bot.set_my_commands(admin_commands)
-        except:
-            await dp.bot.set_my_commands(user_commands)
+    # for admin in get_admins():
+    #     try:
+    #         await dp.bot.set_my_commands(admin_commands)
+    #     except:
+    #         pass
+
+
+
+# async def set_commands(dp: Dispatcher):
+#     await dp.bot.set_my_commands(user_commands, scope=BotCommandScopeDefault())
+
+#     for admin in get_admins():
+#         try:
+#             await dp.bot.set_my_commands(admin_commands, scope=BotCommandScopeChat(chat_id=admin))
+#         except:
+#             pass
 
 # async def set_default_commands(dp):
 #     await dp.bot.set_my_commands([

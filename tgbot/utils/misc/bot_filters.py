@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from tgbot.data.loader import dp,bot
 
-from tgbot.data.config import get_admins
+from tgbot.data.config import get_admins, GROUP_URL, GROUP_ID
 from tgbot.services.api_sqlite import get_settingsx
 
 
@@ -51,9 +51,8 @@ class IsWork(BoundFilter):
 
 class IsSubscriber(BoundFilter):
     async def check(self, message:types.Message):
-        chat_id = -1001698535461
-        url = 'https://t.me/chanel_test_11111'
-        
+        chat_id = GROUP_ID
+        url = GROUP_URL
         sub = await bot.get_chat_member(chat_id=chat_id, user_id=message.from_user.id)
         if sub.status != types.ChatMemberStatus.LEFT:
             return True
@@ -61,11 +60,9 @@ class IsSubscriber(BoundFilter):
             markup = InlineKeyboardMarkup(row_width = 1,
                                         inline_keyboard=[
                                         [
-                                            InlineKeyboardButton(text='Телеграм группа:',
+                                            InlineKeyboardButton(text='Тут будет сссылка на вашу группу или канал',
                                                                 url=url)
                                         ]
                                             ])
-            await dp.bot.send_message(chat_id =message.from_user.id,
-                                        text = f'Подпишитесь на группу и повторите попытку',
-                                        reply_markup=markup) 
+            await message.answer(text = f'Подпишитесь на группу и повторите попытку',reply_markup=markup )
             return False

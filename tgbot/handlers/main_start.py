@@ -86,16 +86,16 @@ async def filter_refill_callback(call: CallbackQuery, state: FSMContext):
 ####################################################################################################
 ############################################## ПРОЧЕЕ ##############################################
 # Открытие главного меню
-# async def start(message):
-#     user_id = message.chat.id
-#     my_channel_id = -1001337625079
-#     statuss = ['creator', 'administrator', 'member']
-#     for i in statuss:
-#         if i == bot.get_chat_member(chat_id=my_channel_id, user_id=message.from_user.id).status:
-#             bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEBAlVfAc_5RxAVtkCserEzRwiwmh0UAwACPAAD-7g6BAwMRWBCpy3SGgQ")
-#             break
-#     else:
-#         bot.send_message(message.chat.id, "Подпишись на канал {} для продолжения".format(set_channel))
+async def start(message):
+    user_id = message.chat.id
+    my_channel_id = -1001337625079
+    statuss = ['creator', 'administrator', 'member']
+    for i in statuss:
+        if i == bot.get_chat_member(chat_id=my_channel_id, user_id=message.from_user.id).status:
+            bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEBAlVfAc_5RxAVtkCserEzRwiwmh0UAwACPAAD-7g6BAwMRWBCpy3SGgQ")
+            break
+    else:
+        bot.send_message(message.chat.id, "Подпишись на канал {} для продолжения".format(set_channel))
 
 
 
@@ -110,6 +110,17 @@ async def main_start(message: Message, state: FSMContext):
                              "🔸 Если не появились вспомогательные кнопки\n"
                              "▶ Введите /start",
                              reply_markup=menu_frep(message.from_user.id))
+    # await state.finish()
+
+
+@dp.message_handler(text='⬅ Главное меню', state="*")
+async def main_start(message: Message, state: FSMContext):
+    await state.finish()
+
+    await message.answer("🔸 Бот готов к использованию.\n"
+                         "🔸 Если не появились вспомогательные кнопки\n"
+                         "▶ Введите /start",
+                         reply_markup=menu_frep(message.from_user.id))
 
 
 
