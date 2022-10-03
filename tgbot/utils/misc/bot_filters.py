@@ -66,3 +66,4 @@ class IsSubscriber(BoundFilter):
                                             ])
             await message.answer(text = f'Подпишитесь на группу и повторите попытку',reply_markup=markup )
             return False
+

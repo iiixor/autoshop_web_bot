@@ -6,6 +6,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.exceptions import MessageCantBeDeleted
 
+
 from tgbot.data.config import BOT_DESCRIPTION
 from tgbot.data.loader import dp
 from tgbot.keyboards.inline_all import profile_open_inl
@@ -80,7 +81,7 @@ async def user_available(message: Message, state: FSMContext):
 @dp.message_handler(text=["ℹ FAQ", "/faq"], state="*")
 async def user_faq(message: Message, state: FSMContext):
     await state.finish()
-
+    print (message.from_user)
     send_message = get_settingsx()['misc_faq']
     if send_message == "None":
         send_message = f"ℹ Информация. Измените её в настройках бота.\n➖➖➖➖➖➖➖➖➖➖\n{BOT_DESCRIPTION}"
