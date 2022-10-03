@@ -6,10 +6,11 @@ from tgbot.utils.misc.bot_filters import IsSubscriber
 
 
 from tgbot.data.loader import dp, bot
-from tgbot.keyboards.inline_user import user_support_finl
+from tgbot.keyboards.inline_user import request_item, user_support_finl
 from tgbot.keyboards.reply_all import menu_frep
 from tgbot.services.api_sqlite import get_settingsx, get_userx
 from tgbot.utils.misc.bot_filters import IsBuy, IsRefill, IsWork
+from tgbot.utils.misc_functions import send_admins
 
 # Игнор-колбэки покупок
 prohibit_buy = ['buy_category_open', 'buy_category_swipe', 'buy_position_open', 'buy_position_swipe',
@@ -124,3 +125,20 @@ async def main_start(message: Message, state: FSMContext):
 
 
 
+
+@dp.message_handler(text='📲 Запрос товара', state = "*")
+async def request_items(message:types.Message, state:FSMContext):
+    await message.answer("Введите товары, которые вам нужны:")
+    await state.set_state("request")
+
+@dp.message_handler(state = "request")
+async def request(message:types.Message, state:FSMContext):
+    mes = message.text
+    text = [
+       "НОВЫЙ ЗАПРОС ❗",
+        f'От пользователя @{message.from_user.username}',
+        mes, 
+    ]
+    await send_admins("\n".join(text))
+    await message.answer("Ваш запрос был передан", reply_markup=menu_frep(message.from_user.id))
+    await state.finish()

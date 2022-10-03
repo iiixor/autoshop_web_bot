@@ -8,7 +8,7 @@ from tgbot.data.config import get_admins
 def menu_frep(user_id):
     keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.row("🎁 Купить", "👤 Профиль", "🧮 Наличие товаров")
-    keyboard.row("☎ Поддержка", "ℹ FAQ")
+    keyboard.row("☎ Поддержка", "ℹ FAQ", "📲 Запрос товара")
 
     if user_id in get_admins():
         keyboard.row("🎁 Управление товарами", "📊 Статистика")

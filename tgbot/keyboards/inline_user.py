@@ -1,5 +1,6 @@
 # - *- coding: utf- 8 - *-
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from tgbot import keyboards
 
 from tgbot.services.api_sqlite import get_paymentx
 
@@ -76,4 +77,12 @@ def user_support_finl(user_name):
         InlineKeyboardButton("💌 Написать в поддержку", url=f"https://t.me/{user_name}"),
     )
 
+    return keyboard
+
+# Запрос админу
+def request_item():
+    keyboard = InlineKeyboardMarkup(
+    ).add(
+        InlineKeyboardButton("📲 Запрос товара"),
+    )
     return keyboard
