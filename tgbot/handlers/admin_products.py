@@ -4,6 +4,8 @@ from contextlib import suppress
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.exceptions import CantParseEntities, MessageCantBeDeleted
+from tgbot.data.config import get_admins, GROUP_URL, GROUP_ID
+from tgbot.data.loader import dp, bot
 
 from tgbot.data.loader import dp
 from tgbot.keyboards.inline_admin import category_edit_open_finl, position_edit_open_finl, category_edit_delete_finl, \
@@ -774,6 +776,7 @@ async def product_position_remove(call: CallbackQuery, state: FSMContext):
 async def product_item_category_open(call: CallbackQuery, state: FSMContext):
     category_id = call.data.split(":")[1]
     remover = int(call.data.split(":")[2])
+    # get_items = get_itemsx(position_id=position_id)
 
     get_category = get_categoryx(category_id=category_id)
     get_positions = get_positionsx(category_id=category_id)
@@ -803,6 +806,7 @@ async def product_item_category_swipe(call: CallbackQuery, state: FSMContext):
 async def product_item_position_swipe(call: CallbackQuery, state: FSMContext):
     category_id = call.data.split(":")[1]
     remover = int(call.data.split(":")[2])
+    # print(category_id)
 
     await call.message.edit_text("<b>🎁 Выберите нужную вам позицию</b>",
                                  reply_markup=products_add_position_swipe_fp(remover, category_id))
@@ -814,6 +818,9 @@ async def product_item_position_swipe(call: CallbackQuery, state: FSMContext):
 async def product_item_position_open(call: CallbackQuery, state: FSMContext):
     position_id = call.data.split(":")[1]
     category_id = call.data.split(":")[2]
+    get_position = et_items = get_positionx(position_id=position_id)
+    print(get_position['position_name'])
+    
 
     await state.update_data(here_cache_add_item_category_id=category_id)
     await state.update_data(here_cache_add_item_position_id=position_id)
@@ -835,17 +842,23 @@ async def product_item_position_open(call: CallbackQuery, state: FSMContext):
 @rate_limit(0)
 @dp.message_handler(IsAdmin(), text="📥 Закончить загрузку товаров", state="*")
 async def product_item_load_finish(message: Message, state: FSMContext):
+    # position_id = data.split(":")[1]
+    # get_position = et_items = get_positionx(position_id=position_id)
+    # print(get_position['position_name'])
     get_all_items = 0
     try:
         async with state.proxy() as data:
             get_all_items = data['here_count_add_items']
     except:
         pass
-
+    # await bot.send_message(chat_id=GROUP_ID,text = f'В магазин добавлено 10 позиций')
     await state.finish()
     await message.answer("<b>📥 Загрузка товаров была успешно завершена ✅\n"
                          f"▶ Загружено товаров: <code>{get_all_items}шт</code></b>",
                          reply_markup=items_frep())
+
+    # await bot.send_message(chat_id=GROUP_ID,text = f'В магазин добавлено 10 позиций')
+    # await bot.send_message(chat_id=GROUP_ID,text=message)
 
 
 # Принятие данных товара

@@ -2,6 +2,7 @@
 from contextlib import suppress
 
 from aiogram.dispatcher import FSMContext
+from tgbot.utils.misc.bot_filters import IsPrivate
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.exceptions import MessageCantBeDeleted
 
@@ -34,7 +35,7 @@ async def main_missed_callback(call: CallbackQuery, state: FSMContext):
 
 
 # Обработка всех неизвестных команд
-@dp.message_handler()
+@dp.message_handler(IsPrivate())
 async def main_missed_message(message: Message):
     await message.answer("♦ Неизвестная команда.\n"
                          "▶ Введите /start")

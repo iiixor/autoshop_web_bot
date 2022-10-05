@@ -1,6 +1,7 @@
 # - *- coding: utf- 8 - *-
 import asyncio
 from contextlib import suppress
+from email import message
 
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message
@@ -16,6 +17,7 @@ from tgbot.keyboards.reply_all import menu_frep
 from tgbot.services.api_sqlite import *
 from tgbot.utils.const_functions import get_date, split_messages, get_unix, ded
 from tgbot.utils.misc_functions import open_profile_user, upload_text, get_faq
+from tgbot.utils.misc_functions import send_admins
 
 
 # Открытие товаров
@@ -268,7 +270,14 @@ async def user_purchase_select(call: CallbackQuery, state: FSMContext):
                                       💰 Ваш баланс: <code>{get_user['user_balance']}₽</code>
                                       """))
         else:
-            await call.answer("🎁 Товаров нет в наличии")
+            await call.answer("🎁 Товаров нет в наличии.\n💰 На ваше имя оформлен предзаказ и отправлен администратору.",show_alert=True)
+            # await call.answer("💰 На ваше имя оформлен предзаказ и отправлен администратору.")
+            position = get_position['position_name']
+            text = ['ПРЕДЗАКАЗ ❗',
+                    f'От пользователя: @{call.from_user.username}',
+                    f'Товар: <code>{position}</code>'
+            ]
+            await send_admins("\n".join(text))
     else:
         await call.answer("❗ У вас недостаточно средств. Пополните баланс", True)
 

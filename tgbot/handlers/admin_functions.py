@@ -4,6 +4,7 @@ import asyncio
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.exceptions import CantParseEntities
+from tgbot.data.config import get_admins, GROUP_URL, GROUP_ID
 
 from tgbot.data.loader import dp, bot
 from tgbot.keyboards.inline_admin import profile_search_finl, profile_search_return_finl
@@ -187,6 +188,7 @@ async def functions_mail_make(message, call: CallbackQuery):
     for user in get_users:
         try:
             await bot.send_message(user['user_id'], message, disable_web_page_preview=True)
+            # await bot.send_message(chat_id=GROUP_ID, message=message, disable_notification=True)
             receive_users += 1
         except:
             block_users += 1
@@ -197,7 +199,7 @@ async def functions_mail_make(message, call: CallbackQuery):
             await call.message.edit_text(f"<b>📢 Рассылка началась... ({how_users}/{len(get_users)})</b>")
 
         await asyncio.sleep(0.08)
-
+    await bot.send_message(chat_id=GROUP_ID,text=message)
     await call.message.edit_text(
         f"<b>📢 Рассылка была завершена за <code>{get_unix() - get_time}сек</code></b>\n"
         f"👤 Всего пользователей: <code>{len(get_users)}</code>\n"

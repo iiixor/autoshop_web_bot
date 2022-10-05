@@ -57,4 +57,4 @@ def items_frep():
 
 # Завершение загрузки товаров
 finish_load_rep = ReplyKeyboardMarkup(resize_keyboard=True)
-finish_load_rep.row("📥 Закончить загрузку товаров")
+finish_load_rep.row("📥 загрузку товаров")

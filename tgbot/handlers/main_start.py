@@ -2,7 +2,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery
-from tgbot.utils.misc.bot_filters import IsSubscriber
+from tgbot.utils.misc.bot_filters import IsSubscriber,IsPrivate
 
 
 from tgbot.data.loader import dp, bot
@@ -102,7 +102,7 @@ async def start(message):
 
 
 
-@dp.message_handler(IsSubscriber(), text=['⬅️ Главное меню', '/start'], state="*")
+@dp.message_handler(IsPrivate(),IsSubscriber(), text=['⬅️ Главное меню', '/start'], state="*")
 async def main_start(message: Message, state: FSMContext):
     await state.finish()
     issubscribers = IsSubscriber()

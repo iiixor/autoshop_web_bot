@@ -60,10 +60,13 @@ class IsSubscriber(BoundFilter):
             markup = InlineKeyboardMarkup(row_width = 1,
                                         inline_keyboard=[
                                         [
-                                            InlineKeyboardButton(text='Тут будет сссылка на вашу группу или канал',
+                                            InlineKeyboardButton(text='Dread Pirate 🏴‍☠️',
                                                                 url=url)
                                         ]
                                             ])
-            await message.answer(text = f'Подпишитесь на группу и повторите попытку',reply_markup=markup )
+            await message.answer(text = f'Вступите в чат и повторите попытку',reply_markup=markup)
             return False
 
+class IsPrivate(BoundFilter):
+    async def check(self, message:types.Message):
+        return message.chat.type == types.ChatType.PRIVATE
